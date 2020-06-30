@@ -18,21 +18,36 @@ import { useCart } from '../../hooks/cart';
 // Calculo do total
 // Navegação no clique do TouchableHighlight
 
+interface Product {
+  id: string;
+  title: string;
+  image_url: string;
+  price: number;
+  quantity: number;
+}
+
 const FloatingCart: React.FC = () => {
   const { products } = useCart();
 
   const navigation = useNavigation();
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE PRICE FROM ALL ITEMS IN THE CART
+    const total = products.reduce(
+      (accumulator, product: Product) =>
+        accumulator + product.price * product.quantity,
+      0,
+    );
 
-    return formatValue(0);
+    return formatValue(total);
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const totalItems = products.reduce(
+      (accumulator, product: Product) => accumulator + product.quantity,
+      0,
+    );
 
-    return 0;
+    return totalItems;
   }, [products]);
 
   return (
